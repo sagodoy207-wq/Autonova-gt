@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTONOVA - Repuestos Automotrices en Guatemala</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#DC2626',
+                            darkred: '#991B1B',
+                            dark: '#0F172A',
+                            accent: '#2563EB'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for cart and modal */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-brand-red selection:text-white">
+
+<!-- TOP ANNOUNCEMENT BAR -->
+<div class="bg-brand-red text-white text-xs md:text-sm font-semibold py-2 px-4 text-center flex justify-between items-center max-w-full">
+    <div class="container mx-auto flex justify-between items-center">
+        <span class="flex items-center gap-2"><i data-lucide="truck" class="w-4 h-4"></i> ¡Envíos a todo Guatemala o Retiro Gratis en Sucursales!</span>
+        <div class="hidden sm:flex gap-4 items-center">
+            <span class="flex items-center gap-1"><i data-lucide="phone" class="w-3.5 h-3.5"></i> PBX: +502 2200-8800</span>
+            <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> Lun - Sáb: 7:30 AM - 6:00 PM</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN NAVBAR -->
+<header class="bg-slate-800/95 backdrop-blur border-b border-slate-700 sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        <!-- LOGO -->
+        <a href="#" class="flex items-center gap-2 text-2xl font-black tracking-wider text-white group">
+            <div class="bg-brand-red p-2 rounded-lg text-white group-hover:bg-red-700 transition">
+                <i data-lucide="wrench" class="w-6 h-6"></i>
+            </div>
+            <span>AUTO<span class="text-brand-red">NOVA</span><span class="text-xs bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded ml-1">GT</span></span>
+        </a>
+
+        <!-- DESKTOP NAV -->
+        <nav class="hidden md:flex items-center gap-6 font-medium text-sm text-slate-300">
+            <a href="#catalogo" class="hover:text-brand-red transition">Catálogo</a>
+            <a href="#marcas" class="hover:text-brand-red transition">Marcas</a>
+            <a href="#sucursales" class="hover:text-brand-red transition">Sucursales</a>
+            <a href="#nosotros" class="hover:text-brand-red transition">Nosotros</a>
+            <a href="#resenas" class="hover:text-brand-red transition">Reseñas</a>
+            <a href="#contacto" class="hover:text-brand-red transition">Contacto</a>
+        </nav>
+
+        <!-- ACTION BUTTONS & CART -->
+        <div class="flex items-center gap-3">
+            <button onclick="toggleCartModal()" class="relative bg-slate-700 hover:bg-slate-600 p-2.5 rounded-xl transition flex items-center justify-center">
+                <i data-lucide="shopping-cart" class="w-5 h-5 text-slate-200"></i>
+                <span id="cart-count" class="absolute -top-1.5 -right-1.5 bg-brand-red text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
+            <a href="#catalogo" class="hidden sm:inline-flex bg-brand-red hover:bg-red-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition items-center gap-2">
+                <i data-lucide="search" class="w-4 h-4"></i> Buscar Repuesto
+            </a>
+            <!-- Mobile menu button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-300 hover:text-white">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700 px-4 py-3 space-y-2">
+        <a href="#catalogo" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Catálogo de Productos</a>
+        <a href="#marcas" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Marcas Garantizadas</a>
+        <a href="#sucursales" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Nuestras Sucursales</a>
+        <a href="#nosotros" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Misión, Visión y Propósito</a>
+        <a href="#resenas" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Reseñas de Clientes</a>
+        <a href="#contacto" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-brand-red">Contacto y Asesoría</a>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="relative bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 py-16 md:py-24 overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#dc2626_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="container mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 bg-red-950/60 border border-red-800/50 text-red-400 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                <i data-lucide="check-circle" class="w-4 h-4"></i> Repuestos Originales y Alternativos A1
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                El Repuesto Exacto Para Tu Vehículo en <span class="text-brand-red">Guatemala</span>
+            </h1>
+            <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto md:mx-0">
+                Contamos con el catálogo más extenso de autopartes para Toyota, Ford, BMW, Nissan, Mazda, Chevrolet y más. Entrega a domicilio o retiro inmediato en nuestras sedes de Villa Nueva y Calzada San Juan.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="#catalogo" class="bg-brand-red hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-900/30">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i> Ver Catálogo
+                </a>
+                <a href="https://wa.me/50239029941?text=Hola,%20busco%20asesor%20para%20un%20repuesto" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/20">
+                    <i data-lucide="message-square" class="w-5 h-5"></i> Asesor Directo WhatsApp
+                </a>
+            </div>
+            <!-- Trust Badges -->
+            <div class="pt-4 grid grid-cols-3 gap-4 border-t border-slate-800 text-center md:text-left">
+                <div>
+                    <div class="text-2xl font-extrabold text-white">100%</div>
+                    <div class="text-xs text-slate-400">Garantizados</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-extrabold text-white">2 Sedes</div>
+                    <div class="text-xs text-slate-400">Villa Nueva / San Juan</div>
+                </div>
+                <div>
+                    <div class="text-2xl font-extrabold text-white">Express</div>
+                    <div class="text-xs text-slate-400">Entrega el mismo día</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- HERO IMAGE / BANNER CARD -->
+        <div class="relative">
+            <div class="bg-gradient-to-tr from-brand-red/20 to-slate-800 border border-slate-700/80 rounded-2xl p-6 shadow-2xl relative">
+                <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80" alt="Repuestos Automotrices" class="w-full h-80 object-cover rounded-xl mb-6 brightness-90 shadow-inner">
+                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">¿Necesitas ayuda con tu vin/chasis?</p>
+                        <p class="text-white font-bold text-sm">Consultanos por número de pieza</p>
+                    </div>
+                    <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-brand-red border border-brand-red/30 px-3.5 py-2 rounded-lg text-xs font-bold transition">
+                        Consultar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BRANDS LOGOS SECTION -->
+<section id="marcas" class="py-12 bg-slate-950 border-b border-slate-800">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+            <p class="text-xs font-bold uppercase tracking-widest text-brand-red mb-1">Especialistas Automotrices</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white">Marcas Reconocidas Con Las Que Trabajamos</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 items-center justify-center">
+            <!-- Brand Cards -->
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="car" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">TOYOTA</span>
+                <span class="text-[10px] text-slate-400">Japón</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="shield" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">FORD</span>
+                <span class="text-[10px] text-slate-400">EE.UU.</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="zap" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">BMW</span>
+                <span class="text-[10px] text-slate-400">Alemania</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="disc" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">NISSAN</span>
+                <span class="text-[10px] text-slate-400">Japón</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="activity" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">MAZDA</span>
+                <span class="text-[10px] text-slate-400">Japón</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group">
+                <i data-lucide="crosshair" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">CHEVROLET</span>
+                <span class="text-[10px] text-slate-400">EE.UU.</span>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 hover:border-brand-red/50 p-4 rounded-xl flex flex-col items-center justify-center transition group col-span-2 sm:col-span-1">
+                <i data-lucide="award" class="w-8 h-8 text-slate-400 group-hover:text-brand-red transition mb-1"></i>
+                <span class="font-black text-lg text-white">HONDA / HYUNDAI</span>
+                <span class="text-[10px] text-slate-400">Asiáticos</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATALOG SECTION -->
+<section id="catalogo" class="py-16 bg-slate-900">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+                <span class="text-xs font-bold text-brand-red uppercase tracking-widest">Inventario Actualizado</span>
+                <h2 class="text-3xl font-extrabold text-white">Catálogo de Repuestos</h2>
+                <p class="text-slate-400 text-sm mt-1">Busca por nombre, código o selecciona según la marca de tu vehículo</p>
+            </div>
+            
+            <!-- Filters & Search -->
+            <div class="flex flex-wrap gap-3">
+                <div class="relative min-w-[240px]">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3.5 text-slate-400"></i>
+                    <input type="text" id="search-input" oninput="filterProducts()" placeholder="Buscar filtro, faja, amortiguador..." class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-brand-red">
+                </div>
+                <select id="brand-filter" onchange="filterProducts()" class="bg-slate-800 border border-slate-700 text-white text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-red">
+                    <option value="all">Todas las Marcas</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Ford">Ford</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Nissan">Nissan</option>
+                    <option value="Mazda">Mazda</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                </select>
+                <select id="category-filter" onchange="filterProducts()" class="bg-slate-800 border border-slate-700 text-white text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-brand-red">
+                    <option value="all">Todas las Categorías</option>
+                    <option value="Frenos">Frenos</option>
+                    <option value="Motor">Motor</option>
+                    <option value="Suspensión">Suspensión</option>
+                    <option value="Eléctrico">Eléctrico / Encendido</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- PRODUCT GRID -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Products injected by JS -->
+        </div>
+
+        <div id="no-results" class="hidden text-center py-12 bg-slate-800/40 rounded-2xl border border-dashed border-slate-700">
+            <i data-lucide="package-x" class="w-12 h-12 text-slate-500 mx-auto mb-3"></i>
+            <h3 class="text-lg font-bold text-white">No se encontraron repuestos</h3>
+            <p class="text-slate-400 text-sm mt-1">Intenta ajustando los filtros o realiza una consulta directa por WhatsApp a nuestro asesor.</p>
+            <a href="https://wa.me/50239029941?text=Hola,%20busco%20un%20repuesto%20que%20no%20encontre%20en%20la%20web" target="_blank" class="inline-flex items-center gap-2 mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition">
+                <i data-lucide="message-circle" class="w-4 h-4"></i> Consultar por WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- DELIVERY / PICKUP METHOD BANNER SECTION -->
+<section class="py-12 bg-gradient-to-r from-red-950/60 via-slate-900 to-slate-900 border-y border-slate-800">
+    <div class="container mx-auto px-4">
+        <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-6 md:p-8">
+            <div class="max-w-3xl">
+                <span class="bg-brand-red/20 text-brand-red text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Opciones de Entrega Flexibles</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-3">¿Cómo prefieres recibir tu repuesto?</h2>
+                <p class="text-slate-300 text-sm md:text-base mt-2">
+                    Diseñamos nuestro servicio para adaptarnos a tu conveniencia y urgencia mecánica. Puedes elegir entre delivery exprés o retirarlo sin costo en la agencia más cercana.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                <!-- Option 1: Delivery -->
+                <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-brand-red transition flex gap-4 items-start">
+                    <div class="bg-brand-red/20 text-brand-red p-3 rounded-lg shrink-0">
+                        <i data-lucide="truck" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            Servicio a Domicilio 
+                            <span class="bg-emerald-950 text-emerald-400 text-[10px] px-2 py-0.5 rounded border border-emerald-800 font-normal">Guate Cargo / Mensajería</span>
+                        </h3>
+                        <p class="text-xs text-slate-300 mt-1">
+                            Envíos el mismo día en la capital y municipios aledaños (Villa Nueva, Mixco, Sta. Catarina). Envíos al interior del país en 24 a 48 horas con cobertura total.
+                        </p>
+                        <ul class="text-xs text-slate-400 mt-3 space-y-1">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Pago contra entrega disponible (según área)</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Empaque reforzado y asegurado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Option 2: Pickup -->
+                <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 hover:border-brand-red transition flex gap-4 items-start">
+                    <div class="bg-slate-800 text-white p-3 rounded-lg shrink-0">
+                        <i data-lucide="store" class="w-7 h-7 text-brand-red"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            Recibir en Tienda (Retiro en Sucursal)
+                            <span class="bg-blue-950 text-blue-400 text-[10px] px-2 py-0.5 rounded border border-blue-800 font-normal">Sin Costo Extra</span>
+                        </h3>
+                        <p class="text-xs text-slate-300 mt-1">
+                            Reserva tu repuesto en línea y retíralo directamente en nuestra agencia de **Unisur Villa Nueva** o **Calzada San Juan**. Tu producto estará listo en 30 minutos.
+                        </p>
+                        <ul class="text-xs text-slate-400 mt-3 space-y-1">
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Asesoría técnica presencial y revisión de pieza</li>
+                            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Parqueo conveniente y seguro en ambas sedes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BRANCHES SECTION -->
+<section id="sucursales" class="py-16 bg-slate-900">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold text-brand-red uppercase tracking-widest">Atención Presencial</span>
+            <h2 class="text-3xl font-extrabold text-white mt-1">Nuestras Sucursales en Guatemala</h2>
+            <p class="text-slate-400 text-sm mt-2">Visítanos en nuestras ubicaciones estratégicas para atención personalizada, verificar muestras o retirar tus pedidos.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Branch 1: Unisur Villa Nueva -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden hover:border-brand-red/60 transition flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="bg-brand-red/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">Sucursal Sur</span>
+                            <h3 class="text-xl font-bold text-white mt-2">Unisur Villa Nueva</h3>
+                        </div>
+                        <div class="p-3 bg-slate-700/50 rounded-xl text-brand-red">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm mt-3">
+                        Centro Comercial Unisur, Km 15.5 Carretera al Pacífico, Villa Nueva, Guatemala.
+                    </p>
+                    
+                    <div class="mt-6 space-y-3 text-xs text-slate-300 border-t border-slate-700/60 pt-4">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="clock" class="w-4 h-4 text-brand-red shrink-0"></i>
+                            <span><strong>Horario:</strong> Lunes a Viernes 7:30 AM - 6:00 PM | Sábados 8:00 AM - 3:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-brand-red shrink-0"></i>
+                            <span><strong>Teléfono Sede:</strong> +502 6630-1122</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                            <span><strong>Servicios:</strong> Mostrador, Inventario Completo, Asesoría de VIN, Parqueo Gratuito</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/80 border-t border-slate-700 p-4 flex gap-3">
+                    <a href="https://maps.google.com/?q=Villa+Nueva+Guatemala" target="_blank" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="navigation" class="w-4 h-4"></i> Cómo Llegar (Mapas)
+                    </a>
+                    <a href="https://wa.me/50239029941?text=Hola,%20quisiera%20consultar%20stock%20en%20sucursal%20Unisur%20Villa%20Nueva" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 rounded-lg transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> WhatsApp Villa Nueva
+                    </a>
+                </div>
+            </div>
+
+            <!-- Branch 2: Calzada San Juan -->
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden hover:border-brand-red/60 transition flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <span class="bg-brand-red/20 text-brand-red text-xs font-bold px-2.5 py-1 rounded">Sucursal Poniente</span>
+                            <h3 class="text-xl font-bold text-white mt-2">Calzada San Juan</h3>
+                        </div>
+                        <div class="p-3 bg-slate-700/50 rounded-xl text-brand-red">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm mt-3">
+                        Calzada San Juan 32-10, Zona 7 (Cerca de Periférico/El Rodeo), Ciudad de Guatemala.
+                    </p>
+                    
+                    <div class="mt-6 space-y-3 text-xs text-slate-300 border-t border-slate-700/60 pt-4">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="clock" class="w-4 h-4 text-brand-red shrink-0"></i>
+                            <span><strong>Horario:</strong> Lunes a Viernes 7:30 AM - 6:00 PM | Sábados 8:00 AM - 3:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-brand-red shrink-0"></i>
+                            <span><strong>Teléfono Sede:</strong> +502 2471-8899</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                            <span><strong>Servicios:</strong> Venta Mayorista y Minorista, Retiro Express, Asesor Técnico</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/80 border-t border-slate-700 p-4 flex gap-3">
+                    <a href="https://maps.google.com/?q=Calzada+San+Juan+Guatemala" target="_blank" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="navigation" class="w-4 h-4"></i> Cómo Llegar (Mapas)
+                    </a>
+                    <a href="https://wa.me/50239029941?text=Hola,%20quisiera%20consultar%20stock%20en%20sucursal%20Calzada%20San%20Juan" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 rounded-lg transition text-center flex items-center justify-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4"></i> WhatsApp San Juan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MISSION / VISION / PURPOSE -->
+<section id="nosotros" class="py-16 bg-slate-950 border-t border-slate-800">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold text-brand-red uppercase tracking-widest">Identidad y Compromiso</span>
+            <h2 class="text-3xl font-extrabold text-white mt-1">Nuestra Filosofía de Trabajo</h2>
+            <p class="text-slate-400 text-sm mt-2">Más de 15 años impulsando el parque vehicular guatemalteco con calidad, honestidad y rapidez.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Propósitos -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition relative">
+                <div class="w-12 h-12 bg-red-950/70 border border-red-800/50 text-brand-red rounded-xl flex items-center justify-center mb-5">
+                    <i data-lucide="target" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Nuestros Propósitos</h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Garantizar que ningún conductor o mecánico en Guatemala detenga sus proyectos por falta de repuestos de calidad. Nos enfocamos en ofrecer soluciones duraderas a precios justos, eliminando la incertidumbre en las reparaciones de vehículos.
+                </p>
+            </div>
+
+            <!-- Misión -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition relative">
+                <div class="w-12 h-12 bg-red-950/70 border border-red-800/50 text-brand-red rounded-xl flex items-center justify-center mb-5">
+                    <i data-lucide="compass" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Nuestra Misión</h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Proveer repuestos automotrices garantizados para marcas líderes como Toyota, Ford, BMW, Nissan, Mazda y Chevrolet; brindando asesoría técnica experta, entregas eficientes a domicilio y la mejor experiencia de servicio en nuestras agencias.
+                </p>
+            </div>
+
+            <!-- Visión -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition relative">
+                <div class="w-12 h-12 bg-red-950/70 border border-red-800/50 text-brand-red rounded-xl flex items-center justify-center mb-5">
+                    <i data-lucide="eye" class="w-6 h-6"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Nuestra Visión</h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    Ser la cadena líder y referencia indiscutible de autopartes en Guatemala, reconocida por la innovación digital, cobertura geográfica expandida y la máxima confiabilidad en cada pieza vendida.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS / TESTIMONIALS SECTION -->
+<section id="resenas" class="py-16 bg-slate-900">
+    <div class="container mx-auto px-4">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold text-brand-red uppercase tracking-widest">Opiniones Reales</span>
+            <h2 class="text-3xl font-extrabold text-white mt-1">Reseñas de Nuestros Clientes</h2>
+            <p class="text-slate-400 text-sm mt-2">Lo que opinan conductores y talleres mecánicos que confían en nosotros día a día.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Review 1 -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 gap-1 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm italic">
+                        "Excelente servicio. Buscaba unas muletas y amortiguadores para mi Toyota Hilux y en la sucursal de Unisur Villa Nueva me atendieron rápido con el número de chasis. ¡Quedó al 100%!"
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
+                    <div>
+                        <p class="text-white font-bold text-sm">Carlos Mendoza</p>
+                        <p class="text-xs text-slate-400">Cliente Particular - Villa Nueva</p>
+                    </div>
+                    <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Compra Verificada</span>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 gap-1 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm italic">
+                        "Tengo mi taller en Calzada San Juan y siempre pido a domicilio mis repuestos para Ford y Nissan. Me llegan en menos de 2 horas. Los precios son muy competitivos y las piezas son originales."
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
+                    <div>
+                        <p class="text-white font-bold text-sm">Ing. Mario Morales</p>
+                        <p class="text-xs text-slate-400">Taller Automotriz 'El Experto'</p>
+                    </div>
+                    <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Cliente Frecuente</span>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 gap-1 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm italic">
+                        "Tenía dudas sobre las pastillas de freno para mi BMW y el asesor de WhatsApp me guió paso a paso. Hice la compra en la web y retiré en la agencia. Servicio de 5 estrellas."
+                    </p>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-700/60 flex items-center justify-between">
+                    <div>
+                        <p class="text-white font-bold text-sm">Andrea Solares</p>
+                        <p class="text-xs text-slate-400">Cliente Particular - Ciudad GT</p>
+                    </div>
+                    <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Compra Verificada</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT & DIRECT ADVISOR SECTION -->
+<section id="contacto" class="py-16 bg-slate-950 border-t border-slate-800">
+    <div class="container mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-xs font-bold text-brand-red uppercase tracking-widest">Contacto Directo</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">¿Necesitas asesoría inmediata?</h2>
+                <p class="text-slate-300 text-sm mt-3 leading-relaxed">
+                    Nuestro equipo de especialistas en repuestos está listo para verificar la compatibilidad de tu autoparte por VIN, número de chasis o modelo de vehículo.
+                </p>
+
+                <!-- Contact Details List -->
+                <div class="mt-8 space-y-6">
+                    <!-- WhatsApp Card -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                        <div class="bg-emerald-600/20 text-emerald-400 p-3 rounded-lg shrink-0">
+                            <i data-lucide="message-square" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs text-slate-400 font-medium">Asesor Directo WhatsApp</p>
+                            <p class="text-white font-bold text-sm sm:text-base">+502 3902-9941</p>
+                            <p class="text-[11px] text-emerald-400 mt-0.5 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> Atendiendo en tiempo real
+                            </p>
+                        </div>
+                        <a href="https://wa.me/50239029941?text=Hola,%20necesito%20asesoria%20para%20un%20repuesto" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition shrink-0">
+                            Escribir
+                        </a>
+                    </div>
+
+                    <!-- Telephone Lines -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                        <div class="bg-brand-red/20 text-brand-red p-3 rounded-lg shrink-0">
+                            <i data-lucide="phone-call" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Línea Fija / PBX Directo</p>
+                            <p class="text-white font-bold text-sm sm:text-base">+502 2200-8800 (Planta Central)</p>
+                            <p class="text-xs text-slate-400">Atención rápida en horario de oficina</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                        <div class="bg-blue-600/20 text-blue-400 p-3 rounded-lg shrink-0">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Correo Electrónico</p>
+                            <p class="text-white font-bold text-sm sm:text-base">ventas@autonova.com.gt</p>
+                            <p class="text-xs text-slate-400">Cotizaciones corporativas y mayoreo</p>
+                        </div>
+                    </div>
+
+                    <!-- Schedule Box -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex items-center gap-4">
+                        <div class="bg-amber-600/20 text-amber-400 p-3 rounded-lg shrink-0">
+                            <i data-lucide="clock" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Horarios Generales de Atención</p>
+                            <p class="text-white text-xs font-semibold mt-0.5">Lunes a Viernes: 7:30 AM a 6:00 PM</p>
+                            <p class="text-white text-xs font-semibold">Sábados: 8:00 AM a 3:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Inquiry Form -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl">
+                <h3 class="text-xl font-bold text-white mb-2">Formulario de Cotización Rápida</h3>
+                <p class="text-slate-400 text-xs mb-6">Envíanos los datos de tu vehículo y te responderemos a la brevedad con la disponibilidad de la pieza.</p>
+
+                <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo *</label>
+                        <input type="text" required placeholder="Ej. Juan Pérez" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-red">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Teléfono / WhatsApp *</label>
+                            <input type="tel" required placeholder="Ej. 5555-1234" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-red">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Marca de Auto</label>
+                            <select class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-brand-red">
+                                <option value="Toyota">Toyota</option>
+                                <option value="Ford">Ford</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Mazda">Mazda</option>
+                                <option value="Chevrolet">Chevrolet</option>
+                                <option value="Otra">Otra Marca</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Modelo, Año y Motor</label>
+                        <input type="text" placeholder="Ej. Corolla 2015 Motor 1.8L" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-red">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Repuesto o Pieza requerida *</label>
+                        <textarea required rows="3" placeholder="Describe la pieza que necesitas o deja el VIN..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-red"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i> Enviar Cotización
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-slate-950 border-t border-slate-800 text-slate-400 py-12 text-sm mt-auto">
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="space-y-3">
+            <div class="flex items-center gap-2 text-xl font-black text-white">
+                <i data-lucide="wrench" class="w-5 h-5 text-brand-red"></i>
+                <span>AUTO<span class="text-brand-red">NOVA</span> GT</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Tu tienda de confianza en Guatemala para repuestos de suspensión, motor, frenos y sistema eléctrico para autos japoneses, americanos y europeos.
+            </p>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-3 text-sm">Marcas Destacadas</h4>
+            <ul class="space-y-1.5 text-xs">
+                <li>Toyota Guatemala</li>
+                <li>Ford Performance & Repuestos</li>
+                <li>BMW OEM y Alternativo</li>
+                <li>Nissan & Mazda Genuine Parts</li>
+                <li>Chevrolet & General Motors</li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-3 text-sm">Sedes Oficiales</h4>
+            <ul class="space-y-1.5 text-xs">
+                <li>📍 Unisur Villa Nueva (Km 15.5)</li>
+                <li>📍 Calzada San Juan, Zona 7</li>
+                <li>🚚 Cobertura Nacional de Entrega</li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-3 text-sm">Aviso Legal & Pagos</h4>
+            <p class="text-xs text-slate-400 mb-2">Aceptamos tarjetas de crédito, débito, transferencias bancarias y efectivo contra entrega.</p>
+            <div class="flex gap-2 text-slate-300">
+                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded text-[10px]">Efectivo GT</span>
+                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded text-[10px]">Visa / Mastercard</span>
+                <span class="bg-slate-900 border border-slate-800 px-2 py-1 rounded text-[10px]">Transferencia</span>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-4 pt-8 mt-8 border-t border-slate-900 text-center text-xs text-slate-500">
+        © 2026 AUTONOVA. Todos los derechos reservados. Villa Nueva y Ciudad de Guatemala.
+    </div>
+</footer>
+
+<!-- SHOPPING CART & CHECKOUT MODAL -->
+<div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+        <!-- Modal Header -->
+        <div class="bg-slate-800 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-red"></i> Carrito de Compras / Solicitud
+            </h3>
+            <button onclick="toggleCartModal()" class="text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="p-6 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
+            <!-- Cart Items List -->
+            <div id="cart-items" class="space-y-3">
+                <!-- Dynamic items rendered here -->
+            </div>
+
+            <!-- Delivery vs Pickup Choice section -->
+            <div class="bg-slate-800/80 border border-slate-700 rounded-xl p-4 space-y-4">
+                <h4 class="text-sm font-bold text-white">Selecciona Modalidad de Entrega:</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="cursor-pointer border border-slate-700 rounded-lg p-3 bg-slate-900 flex items-center gap-3 hover:border-brand-red has-[:checked]:border-brand-red has-[:checked]:bg-brand-red/10 transition">
+                        <input type="radio" name="delivery_type" value="Domicilio" checked onchange="toggleDeliveryOptions()" class="accent-brand-red">
+                        <div>
+                            <p class="text-xs font-bold text-white">A Domicilio</p>
+                            <p class="text-[10px] text-slate-400">Envío Express a tu ubicación</p>
+                        </div>
+                    </label>
+                    <label class="cursor-pointer border border-slate-700 rounded-lg p-3 bg-slate-900 flex items-center gap-3 hover:border-brand-red has-[:checked]:border-brand-red has-[:checked]:bg-brand-red/10 transition">
+                        <input type="radio" name="delivery_type" value="Tienda" onchange="toggleDeliveryOptions()" class="accent-brand-red">
+                        <div>
+                            <p class="text-xs font-bold text-white">Recibir en Tienda</p>
+                            <p class="text-[10px] text-slate-400">Retiro gratis en agencia</p>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Branch selector for Pickup option -->
+                <div id="branch-select-box" class="hidden space-y-2 pt-2 border-t border-slate-700">
+                    <label class="block text-xs font-medium text-slate-300">Sucursal para retiro:</label>
+                    <select id="pickup-branch" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-brand-red">
+                        <option value="Unisur Villa Nueva (Km 15.5 Carretera al Pacífico)">Sucursal Unisur Villa Nueva (Km 15.5)</option>
+                        <option value="Calzada San Juan 32-10, Zona 7">Sucursal Calzada San Juan (Zona 7)</option>
+                    </select>
+                </div>
+
+                <!-- Delivery Address Box -->
+                <div id="address-box" class="space-y-2 pt-2 border-t border-slate-700">
+                    <label class="block text-xs font-medium text-slate-300">Dirección de Entrega:</label>
+                    <input type="text" id="delivery-address" placeholder="Ej. 5ta Avenida 10-20 Zona 1, Ciudad de Guatemala / Municipio" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-brand-red">
+                </div>
+            </div>
+
+            <!-- Customer Details -->
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo</label>
+                    <input type="text" id="checkout-name" placeholder="Tu Nombre" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Teléfono</label>
+                    <input type="tel" id="checkout-phone" placeholder="Ej. 5555-0000" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-xs text-white">
+                </div>
+            </div>
+
+            <!-- Total -->
+            <div class="flex justify-between items-center bg-slate-950 p-4 rounded-xl border border-slate-800">
+                <span class="text-sm font-bold text-slate-300">Total Estimado:</span>
+                <span id="cart-total" class="text-xl font-black text-brand-red">Q0.00</span>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="bg-slate-800 px-6 py-4 border-t border-slate-700 flex gap-3">
+            <button onclick="toggleCartModal()" class="w-1/3 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold py-3 rounded-xl transition">
+                Seguir Comprando
+            </button>
+            <button onclick="sendOrderWhatsApp()" class="w-2/3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-3 rounded-xl transition flex items-center justify-center gap-2">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Confirmar Pedido por WhatsApp
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- NOTIFICATION TOAST -->
+<div id="toast" class="fixed bottom-5 right-5 bg-emerald-600 text-white px-4 py-3 rounded-xl shadow-2xl z-50 hidden flex items-center gap-2 text-sm font-semibold">
+    <i data-lucide="check-circle" class="w-5 h-5"></i>
+    <span id="toast-msg">Producto agregado al carrito</span>
+</div>
+
+<!-- JAVASCRIPT LOGIC -->
+<script>
+    // Extensive Product Catalog Database
+    const products = [
+        {
+            id: 1,
+            name: "Pastillas de Freno Cerámicas Delanteras",
+            brand: "Toyota",
+            category: "Frenos",
+            price: 280,
+            code: "TOY-5542",
+            image: "https://images.unsplash.com/photo-1600706432502-7788f54d7285?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Toyota Hilux / Fortuner 2012-2022"
+        },
+        {
+            id: 2,
+            name: "Amortiguador Hidráulico Reforzado",
+            brand: "Ford",
+            category: "Suspensión",
+            price: 450,
+            code: "FRD-9912",
+            image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Ford Ranger / Explorer 2015-2021"
+        },
+        {
+            id: 3,
+            name: "Filtro de Aceite Sintético de Alto Flujo",
+            brand: "BMW",
+            category: "Mantenimiento",
+            price: 120,
+            code: "BMW-1102",
+            image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=400&q=80",
+            compatibility: "BMW Serie 3 / Serie 5 M-Sport"
+        },
+        {
+            id: 4,
+            name: "Kit de Amortiguadores Traseros",
+            brand: "Nissan",
+            category: "Suspensión",
+            price: 620,
+            code: "NIS-3321",
+            image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Nissan Frontier / NP300 2016-2023"
+        },
+        {
+            id: 5,
+            name: "Kit de Fajas de Distribución / Tiempo",
+            brand: "Mazda",
+            category: "Motor",
+            price: 380,
+            code: "MZD-8871",
+            image: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Mazda 3 / Mazda 6 Skyactiv"
+        },
+        {
+            id: 6,
+            name: "Bomba de Agua Completa con Empaque",
+            brand: "Chevrolet",
+            category: "Motor",
+            price: 310,
+            code: "CHV-4412",
+            image: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Chevrolet Aveo / Tracker / Spark"
+        },
+        {
+            id: 7,
+            name: "Bujías de Iridium Alto Rendimiento (Pack 4)",
+            brand: "Toyota",
+            category: "Eléctrico",
+            price: 240,
+            code: "TOY-7711",
+            image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Toyota Corolla / RAV4 / Yaris"
+        },
+        {
+            id: 8,
+            name: "Disco de Freno Ventilado Delantero",
+            brand: "BMW",
+            category: "Frenos",
+            price: 520,
+            code: "BMW-8890",
+            image: "https://images.unsplash.com/photo-1600706432502-7788f54d7285?auto=format&fit=crop&w=400&q=80",
+            compatibility: "BMW X3 / X5 2014-2020"
+        },
+        {
+            id: 9,
+            name: "Muleta de Suspensión Completa con Cabezal",
+            brand: "Ford",
+            category: "Suspensión",
+            price: 490,
+            code: "FRD-3301",
+            image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Ford F-150 / EcoSport"
+        },
+        {
+            id: 10,
+            name: "Filtro de Aire de Motor Premium",
+            brand: "Nissan",
+            category: "Mantenimiento",
+            price: 95,
+            code: "NIS-1002",
+            image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Nissan Sentra / Kicks / Versa"
+        },
+        {
+            id: 11,
+            name: "Alternador de 12V Reforzado",
+            brand: "Mazda",
+            category: "Eléctrico",
+            price: 890,
+            code: "MZD-9901",
+            image: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Mazda CX-5 / BT-50"
+        },
+        {
+            id: 12,
+            name: "Radiador de Aluminio de Alta Eficiencia",
+            brand: "Chevrolet",
+            category: "Motor",
+            price: 670,
+            code: "CHV-2231",
+            image: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=400&q=80",
+            compatibility: "Chevrolet Colorado / Silverado"
+        }
+    ];
+
+    // Cart state
+    let cart = [];
+
+    // DOM Ready
+    document.addEventListener("DOMContentLoaded", () => {
+        renderProducts(products);
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    });
+
+    // Render products into HTML grid
+    function renderProducts(items) {
+        const container = document.getElementById("product-grid");
+        const noResults = document.getElementById("no-results");
+
+        if (items.length === 0) {
+            container.innerHTML = "";
+            noResults.classList.remove("hidden");
+            return;
+        }
+
+        noResults.classList.add("hidden");
+        container.innerHTML = items.map(product => `
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden hover:border-brand-red/50 transition flex flex-col justify-between group">
+                <div>
+                    <div class="relative overflow-hidden h-48 bg-slate-900">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        <span class="absolute top-3 left-3 bg-slate-900/90 border border-slate-700 text-slate-200 text-[10px] font-bold px-2 py-1 rounded-md">
+                            ${product.brand}
+                        </span>
+                        <span class="absolute top-3 right-3 bg-brand-red text-white text-[10px] font-bold px-2 py-1 rounded-md">
+                            Cód: ${product.code}
+                        </span>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[11px] text-brand-red font-semibold uppercase tracking-wider">${product.category}</span>
+                        <h3 class="text-base font-bold text-white mt-1 group-hover:text-red-400 transition leading-snug">${product.name}</h3>
+                        <p class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                            <span>${product.compatibility}</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="p-5 pt-0 flex items-center justify-between border-t border-slate-700/50 mt-2 pt-4">
+                    <div>
+                        <span class="text-[10px] text-slate-400 uppercase block">Precio Oferta</span>
+                        <span class="text-xl font-extrabold text-white">Q${product.price.toFixed(2)}</span>
+                    </div>
+                    <button onclick="addToCart(${product.id})" class="bg-brand-red hover:bg-red-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5 shadow-md shadow-red-900/20">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i> Agregar
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    }
+
+    // Filter products handler
+    function filterProducts() {
+        const searchVal = document.getElementById("search-input").value.toLowerCase();
+        const brandVal = document.getElementById("brand-filter").value;
+        const categoryVal = document.getElementById("category-filter").value;
+
+        const filtered = products.filter(p => {
+            const matchesSearch = p.name.toLowerCase().includes(searchVal) || p.code.toLowerCase().includes(searchVal) || p.compatibility.toLowerCase().includes(searchVal);
+            const matchesBrand = brandVal === 'all' || p.brand === brandVal;
+            const matchesCategory = categoryVal === 'all' || p.category === categoryVal;
+            return matchesSearch && matchesBrand && matchesCategory;
+        });
+
+        renderProducts(filtered);
+    }
+
+    // Cart Actions
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        const existing = cart.find(item => item.id === productId);
+
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+
+        updateCartUI();
+        showToast(`"${product.name}" agregado al carrito`);
+    }
+
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCartUI();
+    }
+
+    function changeQuantity(productId, delta) {
+        const item = cart.find(i => i.id === productId);
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                updateCartUI();
+            }
+        }
+    }
+
+    function updateCartUI() {
+        const countElem = document.getElementById("cart-count");
+        const totalElem = document.getElementById("cart-total");
+        const itemsContainer = document.getElementById("cart-items");
+
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        countElem.innerText = totalItems;
+        totalElem.innerText = `Q${totalPrice.toFixed(2)}`;
+
+        if (cart.length === 0) {
+            itemsContainer.innerHTML = `
+                <div class="text-center py-8 text-slate-400">
+                    <i data-lucide="shopping-bag" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
+                    <p class="text-sm">El carrito está vacío</p>
+                </div>
+            `;
+        } else {
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="bg-slate-800 border border-slate-700 rounded-xl p-3 flex items-center justify-between gap-3">
+                    <div class="flex-1">
+                        <h4 class="text-xs font-bold text-white line-clamp-1">${item.name}</h4>
+                        <p class="text-[10px] text-slate-400">${item.brand} | Cód: ${item.code}</p>
+                        <p class="text-xs font-bold text-brand-red mt-0.5">Q${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg p-1">
+                        <button onclick="changeQuantity(${item.id}, -1)" class="w-6 h-6 bg-slate-800 text-white rounded flex items-center justify-center font-bold text-xs hover:bg-slate-700">-</button>
+                        <span class="text-xs font-bold text-white px-1">${item.quantity}</span>
+                        <button onclick="changeQuantity(${item.id}, 1)" class="w-6 h-6 bg-slate-800 text-white rounded flex items-center justify-center font-bold text-xs hover:bg-slate-700">+</button>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-slate-400 hover:text-red-400 p-1">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    }
+
+    // Modals & Controls
+    function toggleCartModal() {
+        const modal = document.getElementById("cart-modal");
+        modal.classList.toggle("hidden");
+        updateCartUI();
+    }
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+    }
+
+    function toggleDeliveryOptions() {
+        const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
+        const branchBox = document.getElementById("branch-select-box");
+        const addressBox = document.getElementById("address-box");
+
+        if (deliveryType === "Tienda") {
+            branchBox.classList.remove("hidden");
+            addressBox.classList.add("hidden");
+        } else {
+            branchBox.classList.add("hidden");
+            addressBox.classList.remove("hidden");
+        }
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById("toast");
+        const toastMsg = document.getElementById("toast-msg");
+        toastMsg.innerText = msg;
+        toast.classList.remove("hidden");
+        setTimeout(() => {
+            toast.classList.add("hidden");
+        }, 3000);
+    }
+
+    // Form Submit
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        showToast("¡Gracias! Tu cotización ha sido enviada.");
+        e.target.reset();
+    }
+
+    // Send Order to WhatsApp
+    function sendOrderWhatsApp() {
+        if (cart.length === 0) {
+            showToast("Tu carrito está vacío.");
+            return;
+        }
+
+        const name = document.getElementById("checkout-name").value.trim() || "Cliente";
+        const phone = document.getElementById("checkout-phone").value.trim() || "No especificado";
+        const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
+        
+        let message = `*NUEVA SOLICITUD DE REPUESTOS - AUTONOVA*\n\n`;
+        message += `👤 *Cliente:* ${name}\n`;
+        message += `📞 *Teléfono:* ${phone}\n`;
+        message += `🚚 *Modalidad:* ${deliveryType === 'Tienda' ? 'Recibir en Tienda' : 'A Domicilio'}\n`;
+
+        if (deliveryType === "Tienda") {
+            const branch = document.getElementById("pickup-branch").value;
+            message += `📍 *Sucursal de Retiro:* ${branch}\n`;
+        } else {
+            const address = document.getElementById("delivery-address").value.trim() || "Por coordinar";
+            message += `🏠 *Dirección de Entrega:* ${address}\n`;
+        }
+
+        message += `\n📦 *DETALLE DEL PEDIDO:*\n`;
+        let total = 0;
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            message += `${index + 1}. ${item.name} (${item.brand}) - Cant: ${item.quantity} x Q${item.price} = Q${itemTotal.toFixed(2)}\n`;
+        });
+
+        message += `\n💰 *TOTAL ESTIMADO: Q${total.toFixed(2)}*`;
+        message += `\n\nPor favor confirmar disponibilidad e instrucciones de pago.`;
+
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/50239029941?text=${encodedMessage}`, '_blank');
+    }
+</script>
+</body>
+</html>
